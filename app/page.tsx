@@ -14,6 +14,13 @@ async function App() {
     });
     revalidatePath("/");
   }
+// delete data 
+ async function deleteTodo(id: string) {
+    "use server";
+    await cookiesClient.models.Todo.delete({ id });
+    revalidatePath("/");
+  }
+
 
   return (
     <>
@@ -23,9 +30,15 @@ async function App() {
         <button type="submit">Add Todo</button>
       </form>
 
+     
       <ul>
         {todos && todos.map((todo) => <li key={todo.id}>{todo.content}</li>)}
+
+        <form action={() => deleteTodo(todo.id)} style={{ display: "inline" }}>
+                <button type="submit">Delete</button>
+        </form>
       </ul>
+       
     </>
   );
 }
